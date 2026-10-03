@@ -33,6 +33,7 @@ import { PROFILE, STATS } from '../data/portfolio.data';
             @if (profile.github) {
               <a [href]="profile.github" target="_blank" rel="noopener" aria-label="GitHub"><app-icon name="github" /></a>
             }
+            <a [href]="profile.whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp"><app-icon name="whatsapp" /></a>
             <a [href]="'mailto:' + profile.email" aria-label="Email"><app-icon name="mail" /></a>
             <span class="loc"><app-icon name="pin" [size]="16" /> {{ profile.location }} · Working remotely worldwide</span>
           </div>

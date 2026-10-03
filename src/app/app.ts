@@ -9,6 +9,7 @@ import { ExperienceComponent } from './sections/experience.component';
 import { ProjectsComponent } from './sections/projects.component';
 import { ContactComponent } from './sections/contact.component';
 import { FooterComponent } from './sections/footer.component';
+import { WhatsappButtonComponent } from './sections/whatsapp-button.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { FooterComponent } from './sections/footer.component';
     ProjectsComponent,
     ContactComponent,
     FooterComponent,
+    WhatsappButtonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -36,6 +38,7 @@ import { FooterComponent } from './sections/footer.component';
       <app-contact />
     </main>
     <app-footer />
+    <app-whatsapp-button />
   `,
 })
 export class App {

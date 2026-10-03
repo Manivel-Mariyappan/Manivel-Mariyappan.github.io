@@ -28,7 +28,11 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
             </a>
             <a [href]="'tel:' + profile.phone.replace(' ', '')" class="channel">
               <span class="ic"><app-icon name="phone" /></span>
-              <span><small>Phone / WhatsApp</small>{{ profile.phone }}</span>
+              <span><small>Phone</small>{{ profile.phone }}</span>
+            </a>
+            <a [href]="profile.whatsapp" target="_blank" rel="noopener" class="channel">
+              <span class="ic wa"><app-icon name="whatsapp" /></span>
+              <span><small>WhatsApp — quickest reply</small>Chat on WhatsApp</span>
             </a>
             <a [href]="profile.linkedin" target="_blank" rel="noopener" class="channel">
               <span class="ic"><app-icon name="linkedin" /></span>
@@ -93,6 +97,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
     .channel:hover { border-color: var(--accent); transform: translateX(4px); }
     .channel small { display: block; color: var(--muted); font-size: 12px; }
     .ic { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: var(--gradient); color: #fff; flex-shrink: 0; }
+    .ic.wa { background: #25d366; }
     .ic.big { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; }
 
     .form { padding: 30px; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); display: grid; gap: 18px; box-shadow: var(--shadow); }

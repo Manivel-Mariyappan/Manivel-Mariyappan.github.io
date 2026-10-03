@@ -37,6 +37,10 @@ export const PROFILE = {
   timezoneNote: 'IST (UTC+5:30) — flexible overlap with US, UK & EU hours',
   email: 'maniveluideveloper@gmail.com',
   phone: '+91 9786995053',
+  // wa.me link: country code + number, digits only, with a pre-filled greeting.
+  whatsapp:
+    'https://wa.me/919786995053?text=' +
+    encodeURIComponent("Hi Manivel, I found your portfolio and I'd like to discuss a project."),
   linkedin: 'https://www.linkedin.com/in/manivel-frontendengineer',
   github: 'https://github.com/Manivel-Mariyappan',
   resume: 'Manivel_Resume.pdf',
