@@ -43,9 +43,9 @@ export const PROFILE = {
   // Contact form delivery via EmailJS (https://www.emailjs.com) — see README for setup.
   // These values are public by design. Leave any empty to fall back to opening the visitor's email client.
   emailjs: {
-    serviceId: '',
-    templateId: '',
-    publicKey: '',
+    serviceId: 'service_wc1r2d9',
+    templateId: 'template_h6jp37a',
+    publicKey: '4jKNtGILZXQt0BkHD',
   },
   summary:
     'Senior Software Engineer with nearly a decade of front-end experience, specialising in Angular (15+), ' +
