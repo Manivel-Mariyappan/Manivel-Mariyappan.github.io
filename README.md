@@ -1,59 +1,33 @@
-# ManivelPortfolio
+# Manivel M — Portfolio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
+Personal portfolio for freelance Angular work, built with **Angular 21** (standalone components, signals, OnPush, new control flow, reactive forms).
 
-## Development server
-
-To start a local development server, run:
+## Run locally
 
 ```bash
-ng serve
+npm install
+npm start          # http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Edit content
 
-## Code scaffolding
+All text lives in [`src/app/data/portfolio.data.ts`](src/app/data/portfolio.data.ts) — profile, stats, services, skills, experience, projects.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **GitHub link:** set `PROFILE.github` to show the icon.
+- **Contact form:** create a free form at <https://formspree.io>, then paste its ID into `PROFILE.formspreeId`. Without it, the form opens the visitor's email client.
+- **Résumé:** replace `public/Manivel_Resume.pdf`.
 
-```bash
-ng generate component component-name
+## Structure
+
+```
+src/app/
+  core/       theme service, scroll-reveal directive, icon component
+  data/       portfolio content
+  sections/   header, hero, about, services, skills, experience, projects, contact, footer
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Deploy
 
-```bash
-ng generate --help
-```
+Live at **https://manivel-mariyappan.github.io/**
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Hosted free on GitHub Pages. Every push to `main` builds and deploys automatically via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) — just edit, commit and push.
