@@ -41,7 +41,7 @@ export const PROFILE = {
   whatsapp:
     'https://wa.me/919786995053?text=' +
     encodeURIComponent("Hi Manivel, I found your portfolio and I'd like to discuss a project."),
-  linkedin: 'https://www.linkedin.com/in/manivel-frontendengineer',
+  linkedin: 'https://www.linkedin.com/in/manivel-softwaredev',
   github: 'https://github.com/Manivel-Mariyappan',
   resume: 'Manivel_Resume.pdf',
   // Contact form delivery via EmailJS (https://www.emailjs.com) — see README for setup.

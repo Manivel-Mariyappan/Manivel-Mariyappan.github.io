@@ -36,7 +36,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
             </a>
             <a [href]="profile.linkedin" target="_blank" rel="noopener" class="channel">
               <span class="ic"><app-icon name="linkedin" /></span>
-              <span><small>LinkedIn</small>manivel-frontendengineer</span>
+              <span><small>LinkedIn</small>manivel-softwaredev</span>
             </a>
           </div>
         </div>
