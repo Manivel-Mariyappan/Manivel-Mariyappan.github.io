@@ -30,6 +30,14 @@ src/app/
   sections/   header, hero, about, services, skills, experience, projects, contact, footer
 ```
 
+## SEO
+
+- The page is **prerendered at build time** (`outputMode: "static"`), so search engines get the full HTML without running JavaScript.
+- Meta tags, canonical URL, Open Graph / Twitter cards and JSON-LD structured data (Person, ProfessionalService, WebSite) live in [`src/index.html`](src/index.html).
+- [`public/robots.txt`](public/robots.txt), [`public/sitemap.xml`](public/sitemap.xml), [`public/og-image.png`](public/og-image.png) (1200×630 share image), [`public/site.webmanifest`](public/site.webmanifest), [`public/404.html`](public/404.html).
+- **Google Search Console:** add the property `https://manivel-mariyappan.github.io/`, choose the *HTML tag* method, paste the tag into `src/index.html` (placeholder comment is there), push, verify, then submit `sitemap.xml`. Use *URL Inspection → Request indexing* to speed up the first crawl.
+- Update `<lastmod>` in `sitemap.xml` after big content changes.
+
 ## Deploy
 
 Live at **https://manivel-mariyappan.github.io/**

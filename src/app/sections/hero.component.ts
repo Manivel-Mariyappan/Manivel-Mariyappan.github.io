@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 import { IconComponent } from '../core/icon.component';
 import { PROFILE, STATS } from '../data/portfolio.data';
 
@@ -120,23 +120,25 @@ import { PROFILE, STATS } from '../data/portfolio.data';
     }
   `,
 })
-export class HeroComponent implements OnInit {
+export class HeroComponent {
   protected readonly profile = PROFILE;
   protected readonly stats = STATS;
-  protected readonly typed = signal('');
+  // Starts with the first role so the prerendered HTML contains it.
+  protected readonly typed = signal(PROFILE.roles[0]);
 
   private readonly destroyRef = inject(DestroyRef);
 
-  ngOnInit(): void {
+  constructor() {
+    afterNextRender(() => this.startTyping());
+  }
+
+  private startTyping(): void {
     const roles = this.profile.roles;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.typed.set(roles[0]);
-      return;
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let roleIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
+    let charIndex = roles[0].length;
+    let deleting = true;
     let timer: ReturnType<typeof setTimeout>;
 
     const tick = () => {
@@ -156,7 +158,7 @@ export class HeroComponent implements OnInit {
       timer = setTimeout(tick, delay);
     };
 
-    timer = setTimeout(tick, 500);
+    timer = setTimeout(tick, 1800);
     this.destroyRef.onDestroy(() => clearTimeout(timer));
   }
 }
