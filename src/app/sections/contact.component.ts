@@ -163,7 +163,22 @@ export class ContactComponent {
     try {
       // Loaded on demand so the SDK stays out of the initial bundle.
       const emailjs = await import('@emailjs/browser');
-      await emailjs.send(serviceId, templateId, { name, email, type, message }, { publicKey });
+      const now = new Date();
+      const zone = { timeZone: 'Asia/Kolkata' } as const;
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name,
+          email,
+          type,
+          message,
+          mail_subject: `${type} — enquiry from ${name}`,
+          submitted_date: now.toLocaleDateString('en-IN', { ...zone, day: '2-digit', month: 'short', year: 'numeric' }),
+          submitted_time: `${now.toLocaleTimeString('en-IN', { ...zone, hour: '2-digit', minute: '2-digit', hour12: true })} IST`,
+        },
+        { publicKey },
+      );
       this.form.reset();
       this.status.set('sent');
     } catch {
