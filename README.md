@@ -14,7 +14,11 @@ npm start          # http://localhost:4200
 All text lives in [`src/app/data/portfolio.data.ts`](src/app/data/portfolio.data.ts) — profile, stats, services, skills, experience, projects.
 
 - **GitHub link:** set `PROFILE.github` to show the icon.
-- **Contact form:** create a free form at <https://formspree.io>, then paste its ID into `PROFILE.formspreeId`. Without it, the form opens the visitor's email client.
+- **Contact form:** messages are sent with [EmailJS](https://www.emailjs.com) (`@emailjs/browser`, free 200/month). Until the three IDs below are set, the form falls back to opening the visitor's email client.
+  1. **Email Services → Add Service → Gmail** — connect your inbox, copy the *Service ID*.
+  2. **Email Templates → Create Template** — use the variables `{{name}}`, `{{email}}`, `{{type}}`, `{{message}}`; set *Reply To* to `{{email}}`. Copy the *Template ID*.
+  3. **Account → General** — copy the *Public Key*.
+  4. Paste all three into `PROFILE.emailjs`, then commit and push.
 - **Résumé:** replace `public/Manivel_Resume.pdf`.
 
 ## Structure

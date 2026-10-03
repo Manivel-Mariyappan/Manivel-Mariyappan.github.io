@@ -149,8 +149,10 @@ export class ContactComponent {
     }
     const { name, email, type, message } = this.form.getRawValue();
 
-    // No form backend configured: open the visitor's email client instead.
-    if (!this.profile.formspreeId) {
+    const { serviceId, templateId, publicKey } = this.profile.emailjs;
+
+    // EmailJS not configured: open the visitor's email client instead.
+    if (!serviceId || !templateId || !publicKey) {
       const subject = encodeURIComponent(`${type} — enquiry from ${name}`);
       const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
       window.location.href = `mailto:${this.profile.email}?subject=${subject}&body=${body}`;
@@ -159,12 +161,9 @@ export class ContactComponent {
 
     this.status.set('sending');
     try {
-      const res = await fetch(`https://formspree.io/f/${this.profile.formspreeId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name, email, type, message }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
+      // Loaded on demand so the SDK stays out of the initial bundle.
+      const emailjs = await import('@emailjs/browser');
+      await emailjs.send(serviceId, templateId, { name, email, type, message }, { publicKey });
       this.form.reset();
       this.status.set('sent');
     } catch {

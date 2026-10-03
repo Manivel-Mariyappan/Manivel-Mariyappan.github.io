@@ -40,9 +40,13 @@ export const PROFILE = {
   linkedin: 'https://www.linkedin.com/in/manivel-frontendengineer',
   github: 'https://github.com/Manivel-Mariyappan',
   resume: 'Manivel_Resume.pdf',
-  // Optional: create a free form at https://formspree.io and paste its ID (e.g. "xyzabcd").
-  // Leave empty to fall back to opening the visitor's email client.
-  formspreeId: '',
+  // Contact form delivery via EmailJS (https://www.emailjs.com) — see README for setup.
+  // These values are public by design. Leave any empty to fall back to opening the visitor's email client.
+  emailjs: {
+    serviceId: '',
+    templateId: '',
+    publicKey: '',
+  },
   summary:
     'Senior Software Engineer with nearly a decade of front-end experience, specialising in Angular (15+), ' +
     'React and modern JavaScript. I build fast, responsive, maintainable web applications — from reusable ' +
