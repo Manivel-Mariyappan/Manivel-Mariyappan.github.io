@@ -50,18 +50,16 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
               <button type="button" class="btn btn-ghost" (click)="status.set('idle')">Send another</button>
             </div>
           } @else {
-            <div class="row">
-              <label>
-                <span>Name</span>
-                <input formControlName="name" autocomplete="name" placeholder="Your name" />
-                @if (showError('name')) { <em>Please enter your name.</em> }
-              </label>
-              <label>
-                <span>Email</span>
-                <input formControlName="email" type="email" autocomplete="email" placeholder="you@company.com" />
-                @if (showError('email')) { <em>Please enter a valid email.</em> }
-              </label>
-            </div>
+            <label>
+              <span>Name</span>
+              <input formControlName="name" autocomplete="name" placeholder="Your name" />
+              @if (showError('name')) { <em>Please enter your name.</em> }
+            </label>
+            <label>
+              <span>Email</span>
+              <input formControlName="email" type="email" autocomplete="email" placeholder="you@company.com" />
+              @if (showError('email')) { <em>Please enter a valid email.</em> }
+            </label>
             <label>
               <span>Project type</span>
               <select formControlName="type">
@@ -101,7 +99,6 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
     .ic.big { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; }
 
     .form { padding: 30px; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); display: grid; gap: 18px; box-shadow: var(--shadow); }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     label { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
     input, select, textarea {
       width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong);
@@ -119,7 +116,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
     .success h3 { margin: 0 0 6px; }
     .success p { color: var(--muted); margin: 0 0 20px; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; gap: 36px; } }
-    @media (max-width: 560px) { .row { grid-template-columns: 1fr; } .form { padding: 22px; } }
+    @media (max-width: 560px) { .form { padding: 22px; } }
   `,
 })
 export class ContactComponent {
