@@ -32,7 +32,7 @@ export const PROFILE = {
   name: 'Manivel M',
   initials: 'MM',
   title: 'Senior Angular Developer',
-  roles: ['Angular Developer', 'Front-End Engineer', 'UI Architect', 'React Developer'],
+  roles: ['Angular Developer', 'Web Developer', 'Front-End Engineer', 'UI Architect', 'React Developer'],
   location: 'Chennai, India',
   timezoneNote: 'IST (UTC+5:30) — flexible overlap with US, UK & EU hours',
   email: 'maniveluideveloper@gmail.com',
@@ -77,6 +77,18 @@ export const SERVICES: Service[] = [
     title: 'Angular Application Development',
     description:
       'End-to-end Angular apps with standalone components, signals, NgRx and clean, scalable architecture — from project setup to production.',
+  },
+  {
+    icon: 'globe',
+    title: 'Website Development',
+    description:
+      'Modern, mobile-friendly websites for businesses, startups and professionals — company sites, landing pages and portfolios that load fast and rank well.',
+  },
+  {
+    icon: 'rocket',
+    title: 'Deployment & Hosting Setup',
+    description:
+      'Get your site live: domain, hosting on GitHub Pages, Netlify or Vercel, working contact forms, WhatsApp chat and automatic deploys.',
   },
   {
     icon: 'upgrade',

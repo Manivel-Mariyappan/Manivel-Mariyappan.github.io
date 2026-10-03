@@ -127,6 +127,9 @@ export class ContactComponent {
   protected readonly status = signal<Status>('idle');
   protected readonly projectTypes = [
     'New Angular application',
+    'Business / company website',
+    'Landing page',
+    'Portfolio / personal website',
     'Angular upgrade / migration',
     'Feature development',
     'UI / component library',

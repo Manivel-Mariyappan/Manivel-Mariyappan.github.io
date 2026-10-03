@@ -13,7 +13,7 @@ import { PROCESS, SERVICES } from '../data/portfolio.data';
         <div class="head" appReveal>
           <p class="eyebrow">Services</p>
           <h2 class="section-title">How I can <span class="gradient-text">help your project</span></h2>
-          <p class="section-sub">Hire me for a full build, a feature, an upgrade, or to strengthen your existing team.</p>
+          <p class="section-sub">From a fast business website to a full Angular application — hire me for a complete build, a feature, an upgrade, or to strengthen your team.</p>
         </div>
 
         <div class="services">
@@ -42,7 +42,7 @@ import { PROCESS, SERVICES } from '../data/portfolio.data';
   styles: `
     .head { text-align: center; margin-bottom: 48px; }
     .head .section-sub { margin-inline: auto; }
-    .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .service {
       padding: 28px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface);
       transition: transform .25s, border-color .25s, box-shadow .25s;
