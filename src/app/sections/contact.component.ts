@@ -3,7 +3,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validatio
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { IconComponent } from '../core/icon.component';
 import { RevealDirective } from '../core/reveal.directive';
-import { RichTextEditorComponent } from '../core/rich-text-editor.component';
+import { SummernoteEditorComponent } from '../core/summernote-editor.component';
 import { PROFILE } from '../data/portfolio.data';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -31,7 +31,7 @@ function minTextLength(min: number) {
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, NgSelectComponent, IconComponent, RevealDirective, RichTextEditorComponent],
+  imports: [ReactiveFormsModule, NgSelectComponent, IconComponent, RevealDirective, SummernoteEditorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="contact" class="section alt">
@@ -94,7 +94,7 @@ function minTextLength(min: number) {
                 </div>
                 <div class="field" [class.invalid]="showError('message')">
                   <span class="field-label">Message</span>
-                  <app-rich-text-editor [control]="form.controls.message" [placeholder]="messagePlaceholder" />
+                  <app-summernote-editor [control]="form.controls.message" [placeholder]="messagePlaceholder" />
                   @if (showError('message')) { <em>Please write at least 10 characters.</em> }
                 </div>
               </div>
