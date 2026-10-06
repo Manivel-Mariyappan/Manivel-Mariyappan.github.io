@@ -60,17 +60,12 @@ export class SummernoteEditorComponent {
       fontNames: FONT_NAMES,
       fontNamesIgnoreCheck: FONT_NAMES,
       fontSizes: ['12', '14', '16', '18', '24', '32'],
-      // Summernote's default toolbar (as on summernote.org), plus font size and strikethrough.
-      // Picture/video are left out: embedded images exceed EmailJS's 50 KB message limit.
       toolbar: [
         ['style', ['style']],
-        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+        ['font', ['bold', 'italic', 'underline', 'strikethrough']],
         ['fontname', ['fontname', 'fontsize']],
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link']],
-        ['view', ['fullscreen', 'codeview', 'help']],
       ],
       callbacks: {
         onChange: (html: string) => {
