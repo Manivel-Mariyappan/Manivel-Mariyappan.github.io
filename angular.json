@@ -53,15 +53,10 @@
             ],
             "styles": [
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
-              "node_modules/summernote/dist/summernote-lite.min.css",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
-            "outputMode": "static",
-            "allowedCommonJsDependencies": [
-              "jquery",
-              "summernote"
-            ]
+            "outputMode": "static"
           },
           "configurations": {
             "production": {

@@ -1,37 +1,25 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { IconComponent } from '../core/icon.component';
 import { RevealDirective } from '../core/reveal.directive';
-import { SummernoteEditorComponent } from '../core/summernote-editor.component';
 import { PROFILE } from '../data/portfolio.data';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
-/** Converts the editor's HTML to readable plain text (keeps line breaks and bullets). */
-function htmlToText(html: string): string {
-  const text = html
-    .replace(/<li[^>]*>/gi, '• ')
-    .replace(/<\/(p|div|li|h[1-6])>|<br\s*\/?>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&');
-  return text.replace(/\n{3,}/g, '\n\n').trim();
-}
-
-/** Requires at least `min` characters of visible text (ignores HTML tags). */
-function minTextLength(min: number) {
-  return (control: AbstractControl<string>): ValidationErrors | null =>
-    htmlToText(control.value ?? '').length >= min ? null : { minTextLength: { min } };
+/** Escapes plain text for an HTML email, keeping line breaks (for templates using {{{message_html}}}). */
+function textToHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
 }
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, NgSelectComponent, IconComponent, RevealDirective, SummernoteEditorComponent],
+  imports: [ReactiveFormsModule, NgSelectComponent, IconComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="contact" class="section alt">
@@ -83,36 +71,27 @@ function minTextLength(min: number) {
               <input formControlName="email" type="email" autocomplete="email" placeholder="you@company.com" />
               @if (showError('email')) { <em>Please enter a valid email.</em> }
             </label>
-            <!-- ng-select and the rich-text editor are lazy-loaded when the form scrolls into view.
-                 Until then (and in the prerendered HTML) native controls bound to the same form fields are shown. -->
+            <!-- ng-select is lazy-loaded when the form scrolls into view.
+                 Until then (and in the prerendered HTML) a native select bound to the same field is shown. -->
             @defer (on viewport; prefetch on idle) {
-              <div class="fields">
-                <div class="field">
-                  <label for="project-type">Project type</label>
-                  <ng-select labelForId="project-type" formControlName="type" [items]="projectTypes"
-                             [clearable]="false" placeholder="Choose a project type" notFoundText="No matching type" />
-                </div>
-                <div class="field" [class.invalid]="showError('message')">
-                  <span class="field-label">Message</span>
-                  <app-summernote-editor [control]="form.controls.message" [placeholder]="messagePlaceholder" />
-                  @if (showError('message')) { <em>Please write at least 10 characters.</em> }
-                </div>
+              <div class="field">
+                <label for="project-type">Project type</label>
+                <ng-select labelForId="project-type" formControlName="type" [items]="projectTypes"
+                           [clearable]="false" placeholder="Choose a project type" notFoundText="No matching type" />
               </div>
             } @placeholder {
-              <div class="fields">
-                <label>
-                  <span>Project type</span>
-                  <select formControlName="type">
-                    @for (t of projectTypes; track t) { <option [value]="t">{{ t }}</option> }
-                  </select>
-                </label>
-                <label>
-                  <span>Message</span>
-                  <textarea formControlName="message" rows="6" [placeholder]="messagePlaceholder"></textarea>
-                  @if (showError('message')) { <em>Please write at least 10 characters.</em> }
-                </label>
-              </div>
+              <label>
+                <span>Project type</span>
+                <select formControlName="type">
+                  @for (t of projectTypes; track t) { <option [value]="t">{{ t }}</option> }
+                </select>
+              </label>
             }
+            <label>
+              <span>Message</span>
+              <textarea formControlName="message" rows="6" placeholder="Tell me about your project, timeline and budget…"></textarea>
+              @if (showError('message')) { <em>Please write at least 10 characters.</em> }
+            </label>
             @if (status() === 'error') {
               <p class="err" role="alert">Something went wrong. Please email me directly at {{ profile.email }}.</p>
             }
@@ -143,7 +122,6 @@ function minTextLength(min: number) {
     .form { padding: 30px; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); display: grid; gap: 18px; box-shadow: var(--shadow); }
     label, .field { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
     .field > label { display: block; }
-    .fields { display: grid; gap: 18px; }
     input, select, textarea {
       width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong);
       background: var(--bg); color: var(--text); font: inherit; font-weight: 400; transition: border-color .2s, box-shadow .2s;
@@ -166,7 +144,6 @@ function minTextLength(min: number) {
 export class ContactComponent {
   protected readonly profile = PROFILE;
   protected readonly status = signal<Status>('idle');
-  protected readonly messagePlaceholder = 'Tell me about your project, timeline and budget…';
   protected readonly projectTypes = [
     'New Angular application',
     'Business / company website',
@@ -184,7 +161,7 @@ export class ContactComponent {
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     type: [this.projectTypes[0]],
-    message: ['', minTextLength(10)],
+    message: ['', [Validators.required, Validators.minLength(10)]],
   });
 
   protected showError(name: 'name' | 'email' | 'message'): boolean {
@@ -197,8 +174,7 @@ export class ContactComponent {
       this.form.markAllAsTouched();
       return;
     }
-    const { name, email, type, message: messageHtml } = this.form.getRawValue();
-    const message = htmlToText(messageHtml);
+    const { name, email, type, message } = this.form.getRawValue();
 
     const { serviceId, templateId, publicKey } = this.profile.emailjs;
 
@@ -224,7 +200,7 @@ export class ContactComponent {
           email,
           type,
           message,
-          message_html: messageHtml,
+          message_html: textToHtml(message),
           mail_subject: `${type} — enquiry from ${name}`,
           submitted_date: now.toLocaleDateString('en-IN', { ...zone, day: '2-digit', month: 'short', year: 'numeric' }),
           submitted_time: `${now.toLocaleTimeString('en-IN', { ...zone, hour: '2-digit', minute: '2-digit', hour12: true })} IST`,

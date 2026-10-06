@@ -21,16 +21,13 @@
     "@angular/ssr": "^21.2.24",
     "@emailjs/browser": "^4.4.1",
     "@ng-select/ng-select": "^21.8.2",
-    "jquery": "^3.7.1",
     "rxjs": "~7.8.0",
-    "summernote": "^0.9.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.12",
     "@angular/cli": "^21.2.12",
     "@angular/compiler-cli": "^21.2.0",
-    "@types/jquery": "^3.5.34",
     "@types/node": "^20.17.19",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
