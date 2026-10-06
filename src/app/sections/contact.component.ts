@@ -144,7 +144,6 @@ function minTextLength(min: number) {
     label, .field { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
     .field > label { display: block; }
     .fields { display: grid; gap: 18px; }
-    .field.invalid app-rich-text-editor { --ngx-editor-border-color: #ef4444; }
     input, select, textarea {
       width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong);
       background: var(--bg); color: var(--text); font: inherit; font-weight: 400; transition: border-color .2s, box-shadow .2s;

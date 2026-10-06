@@ -1,40 +1,57 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
+import { QuillEditorComponent, QuillModules } from 'ngx-quill';
+
+/** Email-safe fonts offered in the toolbar. */
+export const EDITOR_FONTS = ['Arial', 'Georgia', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Courier New'];
+/** Font sizes offered in the toolbar. */
+export const EDITOR_SIZES = ['12px', '14px', '18px', '24px', '32px'];
 
 /**
- * Rich-text message field (ngx-editor) bound to a reactive FormControl.
+ * Summernote-style rich-text message field (Quill via ngx-quill) bound to a reactive FormControl.
+ * Fonts, sizes, colours and alignment are written as inline styles so formatting survives in email.
  * Standalone so it can be lazy-loaded with @defer; the value is an HTML string.
  */
 @Component({
   selector: 'app-rich-text-editor',
-  imports: [NgxEditorModule, ReactiveFormsModule],
+  imports: [QuillEditorComponent, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="NgxEditor__Wrapper">
-      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" />
-      <ngx-editor [editor]="editor" [formControl]="control()" [placeholder]="placeholder()" />
-    </div>
+    <quill-editor
+      theme="snow"
+      format="html"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+      [modules]="modules"
+      [customOptions]="customOptions"
+      defaultEmptyValue=""
+    />
   `,
   styles: `
-    :host { display: block; }
-    :host ::ng-deep .NgxEditor { min-height: 150px; }
-    :host ::ng-deep .NgxEditor .ProseMirror { min-height: 140px; padding: 10px 14px; }
+    app-rich-text-editor { display: block; }
+    app-rich-text-editor quill-editor { display: block; }
+    app-rich-text-editor .ql-container { min-height: 160px; font-size: 15px; }
   `,
 })
-export class RichTextEditorComponent implements OnDestroy {
+export class RichTextEditorComponent {
   readonly control = input.required<FormControl<string>>();
   readonly placeholder = input('');
 
-  protected readonly editor = new Editor();
-  protected readonly toolbar: Toolbar = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['bullet_list', 'ordered_list'],
-    ['link'],
-    ['format_clear'],
+  // Use inline-style attributors instead of Quill's default CSS classes (email clients drop the classes).
+  protected readonly customOptions = [
+    { import: 'attributors/style/font', whitelist: EDITOR_FONTS },
+    { import: 'attributors/style/size', whitelist: EDITOR_SIZES },
+    { import: 'attributors/style/align', whitelist: ['right', 'center', 'justify'] },
   ];
 
-  ngOnDestroy(): void {
-    this.editor.destroy();
-  }
+  protected readonly modules: QuillModules = {
+    toolbar: [
+      [{ font: [false, ...EDITOR_FONTS] }, { size: [false, ...EDITOR_SIZES] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }, { background: [] }],
+      [{ list: 'ordered' }, { list: 'bullet' }, { align: [] }],
+      ['link', 'clean'],
+    ],
+  };
 }

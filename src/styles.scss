@@ -171,37 +171,93 @@ h1, h2, h3 { line-height: 1.2; }
 }
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled { color: var(--muted); }
 
-/* ---------- ngx-editor (Message rich-text editor) ---------- */
+/* ---------- Quill (Message rich-text editor, see RichTextEditorComponent) ---------- */
+$editor-fonts: ('Arial', 'Georgia', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Courier New');
+$editor-sizes: (12px, 14px, 18px, 24px, 32px);
+
 app-rich-text-editor {
-  --ngx-editor-border-radius: 10px;
-  --ngx-editor-border-color: var(--border-strong);
-  --ngx-editor-wrapper-border-color: var(--border-strong);
-  --ngx-editor-background-color: var(--bg);
-  --ngx-editor-text-color: var(--text);
-  --ngx-editor-placeholder-color: var(--muted);
-  --ngx-editor-menubar-bg-color: var(--surface-2);
-  --ngx-editor-menu-item-border-radius: 6px;
-  --ngx-editor-menu-item-hover-bg-color: var(--surface);
-  --ngx-editor-menu-item-active-bg-color: color-mix(in srgb, var(--accent) 18%, transparent);
-  --ngx-editor-menu-item-active-color: var(--accent);
-  --ngx-editor-seperator-color: var(--border-strong);
-  --ngx-editor-popup-bg-color: var(--surface);
-  --ngx-editor-popup-border-radius: 10px;
-  --ngx-editor-popup-shadow: var(--shadow);
-  --ngx-editor-focus-ring-color: var(--accent);
-  --ngx-editor-blockquote-color: var(--muted);
+  .ql-toolbar.ql-snow {
+    border: 1px solid var(--border-strong);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    background: var(--surface-2);
+    font-family: var(--font);
+    padding: 6px 8px;
+  }
+  .ql-container.ql-snow {
+    border: 1px solid var(--border-strong);
+    border-radius: 0 0 10px 10px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+  }
+  .ql-editor { min-height: 160px; padding: 12px 14px; }
+  .ql-editor.ql-blank::before { color: var(--muted); font-style: normal; left: 14px; right: 14px; }
+  .ql-editor a { color: var(--accent); }
+  quill-editor:focus-within {
+    .ql-toolbar.ql-snow, .ql-container.ql-snow { border-color: var(--accent); }
+    .ql-container.ql-snow { box-shadow: 0 3px 0 0 color-mix(in srgb, var(--accent) 22%, transparent); }
+  }
+
+  /* Toolbar icons and pickers */
+  .ql-snow .ql-stroke { stroke: var(--text); }
+  .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill { fill: var(--text); }
+  .ql-snow .ql-picker { color: var(--text); }
+  .ql-snow.ql-toolbar button:hover .ql-stroke, .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+  .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke { stroke: var(--accent); }
+  .ql-snow.ql-toolbar button:hover .ql-fill, .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: var(--accent); }
+  .ql-snow.ql-toolbar button:hover, .ql-snow.ql-toolbar button.ql-active,
+  .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-label.ql-active,
+  .ql-snow.ql-toolbar .ql-picker-item:hover, .ql-snow.ql-toolbar .ql-picker-item.ql-selected { color: var(--accent); }
+  .ql-snow .ql-picker-options {
+    background: var(--surface);
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    z-index: 5;
+  }
+  .ql-snow .ql-picker.ql-expanded .ql-picker-label { border-color: transparent; }
+  .ql-snow .ql-color-picker .ql-picker-item { border-color: var(--border); }
+
+  /* Font family picker: label each option with its own font */
+  .ql-snow .ql-picker.ql-font { width: 132px; }
+  .ql-snow .ql-picker.ql-font .ql-picker-label::before,
+  .ql-snow .ql-picker.ql-font .ql-picker-item::before { content: 'Default font'; }
+  @each $font in $editor-fonts {
+    .ql-snow .ql-picker.ql-font .ql-picker-label[data-value='#{$font}']::before,
+    .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='#{$font}']::before { content: '#{$font}'; }
+    .ql-snow .ql-picker.ql-font .ql-picker-item[data-value='#{$font}']::before { font-family: '#{$font}'; }
+  }
+
+  /* Font size picker */
+  .ql-snow .ql-picker.ql-size { width: 88px; }
+  .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+  .ql-snow .ql-picker.ql-size .ql-picker-item::before { content: 'Normal'; }
+  @each $size in $editor-sizes {
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='#{$size}']::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='#{$size}']::before { content: '#{$size}'; }
+  }
+
+  /* Link tooltip */
+  .ql-snow .ql-tooltip {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    z-index: 5;
+  }
+  .ql-snow .ql-tooltip input[type='text'] {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+  }
+  .ql-snow .ql-tooltip a.ql-action, .ql-snow .ql-tooltip a.ql-remove, .ql-snow .ql-tooltip a.ql-preview { color: var(--accent); }
 }
-app-rich-text-editor .NgxEditor__Wrapper { border-radius: 10px; overflow: visible; transition: border-color 0.2s, box-shadow 0.2s; }
-app-rich-text-editor .NgxEditor__Wrapper:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+.field.invalid app-rich-text-editor {
+  .ql-toolbar.ql-snow, .ql-container.ql-snow { border-color: #ef4444; }
 }
-app-rich-text-editor .NgxEditor__MenuBar { border-radius: 10px 10px 0 0; color: var(--text); flex-wrap: wrap; }
-app-rich-text-editor .NgxEditor { border: none; border-radius: 0 0 10px 10px; font-weight: 400; }
-app-rich-text-editor .NgxEditor .ProseMirror { outline: none; }
-app-rich-text-editor .NgxEditor .ProseMirror a { color: var(--accent); }
-app-rich-text-editor .NgxEditor__Popup input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); border-radius: 6px; }
-app-rich-text-editor .NgxEditor__Popup button { background: var(--gradient); color: #fff; border: none; border-radius: 6px; padding: 4px 12px; cursor: pointer; }
 
 /* Scroll reveal (see RevealDirective) */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
