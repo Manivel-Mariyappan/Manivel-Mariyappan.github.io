@@ -124,6 +124,85 @@ h1, h2, h3 { line-height: 1.2; }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
+/* ---------- ng-select (Project type dropdown) ---------- */
+.ng-select .ng-select-container {
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 400;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ng-select.ng-select-single .ng-select-container { height: 48px; }
+.ng-select .ng-select-container .ng-value-container { padding-left: 14px; }
+.ng-select .ng-select-container .ng-value-container .ng-input > input { color: var(--text); }
+.ng-select .ng-select-container .ng-value-container .ng-placeholder { color: var(--muted); }
+.ng-select:not(.ng-select-opened) > .ng-select-container:hover { box-shadow: none; border-color: var(--accent); }
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container,
+.ng-select.ng-select-opened > .ng-select-container {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  background: var(--bg);
+}
+.ng-select.ng-select-opened.ng-select-bottom > .ng-select-container { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.ng-select .ng-arrow-wrapper .ng-arrow { border-color: var(--muted) transparent transparent; }
+.ng-select.ng-select-opened > .ng-select-container .ng-arrow { border-color: transparent transparent var(--accent); }
+.ng-dropdown-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-strong) !important;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.ng-dropdown-panel.ng-select-bottom { margin-top: 6px; }
+.ng-dropdown-panel.ng-select-top { margin-bottom: 6px; }
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  padding: 10px 14px;
+  background: var(--surface);
+  color: var(--text);
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked { background: var(--surface-2); color: var(--text); }
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  color: var(--accent);
+  font-weight: 600;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled { color: var(--muted); }
+
+/* ---------- ngx-editor (Message rich-text editor) ---------- */
+app-rich-text-editor {
+  --ngx-editor-border-radius: 10px;
+  --ngx-editor-border-color: var(--border-strong);
+  --ngx-editor-wrapper-border-color: var(--border-strong);
+  --ngx-editor-background-color: var(--bg);
+  --ngx-editor-text-color: var(--text);
+  --ngx-editor-placeholder-color: var(--muted);
+  --ngx-editor-menubar-bg-color: var(--surface-2);
+  --ngx-editor-menu-item-border-radius: 6px;
+  --ngx-editor-menu-item-hover-bg-color: var(--surface);
+  --ngx-editor-menu-item-active-bg-color: color-mix(in srgb, var(--accent) 18%, transparent);
+  --ngx-editor-menu-item-active-color: var(--accent);
+  --ngx-editor-seperator-color: var(--border-strong);
+  --ngx-editor-popup-bg-color: var(--surface);
+  --ngx-editor-popup-border-radius: 10px;
+  --ngx-editor-popup-shadow: var(--shadow);
+  --ngx-editor-focus-ring-color: var(--accent);
+  --ngx-editor-blockquote-color: var(--muted);
+}
+app-rich-text-editor .NgxEditor__Wrapper { border-radius: 10px; overflow: visible; transition: border-color 0.2s, box-shadow 0.2s; }
+app-rich-text-editor .NgxEditor__Wrapper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+app-rich-text-editor .NgxEditor__MenuBar { border-radius: 10px 10px 0 0; color: var(--text); flex-wrap: wrap; }
+app-rich-text-editor .NgxEditor { border: none; border-radius: 0 0 10px 10px; font-weight: 400; }
+app-rich-text-editor .NgxEditor .ProseMirror { outline: none; }
+app-rich-text-editor .NgxEditor .ProseMirror a { color: var(--accent); }
+app-rich-text-editor .NgxEditor__Popup input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); border-radius: 6px; }
+app-rich-text-editor .NgxEditor__Popup button { background: var(--gradient); color: #fff; border: none; border-radius: 6px; padding: 4px 12px; cursor: pointer; }
+
 /* Scroll reveal (see RevealDirective) */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.is-visible { opacity: 1; transform: none; }

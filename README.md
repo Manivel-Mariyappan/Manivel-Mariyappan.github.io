@@ -16,7 +16,7 @@ All text lives in [`src/app/data/portfolio.data.ts`](src/app/data/portfolio.data
 - **GitHub link:** set `PROFILE.github` to show the icon.
 - **Contact form:** messages are sent with [EmailJS](https://www.emailjs.com) (`@emailjs/browser`, free 200/month). Until the three IDs below are set, the form falls back to opening the visitor's email client.
   1. **Email Services → Add Service → Gmail** — connect your inbox, copy the *Service ID*.
-  2. **Email Templates → Create Template** — use the variables `{{name}}`, `{{email}}`, `{{type}}`, `{{message}}`, `{{mail_subject}}`, `{{submitted_date}}`, `{{submitted_time}}` (IST); set *Reply To* to `{{email}}`. Copy the *Template ID*.
+  2. **Email Templates → Create Template** — use the variables `{{name}}`, `{{email}}`, `{{type}}`, `{{message}}` (plain text) or `{{{message_html}}}` (formatted — note the triple braces), `{{mail_subject}}`, `{{submitted_date}}`, `{{submitted_time}}` (IST); set *Reply To* to `{{email}}`. Copy the *Template ID*.
   3. **Account → General** — copy the *Public Key*.
   4. Paste all three into `PROFILE.emailjs`, then commit and push.
 - **Résumé:** replace `public/Manivel_Resume.pdf`.
